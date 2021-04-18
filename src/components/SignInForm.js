@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 
-import { Grommet, Box, Text, Button, Form, FormField, TextInput } from 'grommet';
+import { Grommet, Box, Text, Button, Form, FormField, TextInput, Anchor } from 'grommet';
 
 import API from "../utils/API";
 
@@ -50,6 +50,7 @@ export default function SignInForm(props) {
         });
     }
 
+
     const handleInput = (event) => {
         setErrorState();
         setSignInFormState({...signInFormState, [event.target.name]: event.target.value});
@@ -61,8 +62,32 @@ export default function SignInForm(props) {
         }
     }
 
+    const handleGuestSignIn = () => {
+        API.signIn({
+            userName: 'Guest',
+            password: 'guestP@ssw0rd'
+        }).then((response) => {
+            props.setUserState({
+                id: response.data.user.id,
+                userName: response.data.user.userName,
+                firstName: response.data.user.firstName,
+                lastName: response.data.user.lastName,
+                email: response.data.user.email,
+                portrait: response.data.user.portrait,
+                bio: response.data.user.bio,
+                isSignedIn: true,
+                token: response.data.token
+            })
+        }).catch((err) => {
+            localStorage.clear('token');
+            setErrorState({ password: err.responseText });
+        });
+    }
+
     return (
         <Grommet theme={customTheme}>
+            <Box justify='center' align='center'>
+
             <Form errors={errorState} onSubmit={handleSubmit} value={signInFormState}>
                 <FormField name='userName' htmlFor='sign-up-username' label='Username' required>
                     <TextInput
@@ -89,10 +114,26 @@ export default function SignInForm(props) {
                         <Text color="status-error">Incorrect username or password.</Text>
                     </Box>)
                 }
-                <Box>
-                    <Button primary size='large' type='submit' label='Sign In' />
+                <Box align='center'>
+                    <Box align='center'>
+                        <Button primary size='large' type='submit' label='Sign In' />
+                    </Box>
+
+                    <Box
+                        margin={{ top: 'medium' }}
+                        round='small' 
+                        pad='small' 
+                        background='rgba(212,212,212,1)'
+                        align='center'
+                        width='80%'
+                    > 
+                        <Text>
+                            Are you here to demo this application? <Anchor onClick={handleGuestSignIn}>Click here</Anchor> to sign in with a guest account.
+                        </Text>
+                    </Box>
                 </Box>
             </Form>
+            </Box>
         </Grommet>
     )
 }
