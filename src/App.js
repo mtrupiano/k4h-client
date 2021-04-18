@@ -1,6 +1,6 @@
 import  { React, useState, useEffect } from 'react';
-import { Grommet } from 'grommet';
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { Grommet, Box, Text, Anchor } from 'grommet';
+import { BrowserRouter as Router, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import Home from "./pages/Home";
 import Tag from "./pages/Tag";
 import Profile from "./pages/ProfilePage";
@@ -22,6 +22,8 @@ import API from "./utils/API";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
+
+  const history = useHistory();
 
   const [formObj, setFormObj] = useState({
     userName: "",
@@ -136,6 +138,19 @@ function App() {
     }
   }
 
+  const handleGuestGoToSignUp = () => {
+    setUserState({
+      id: "",
+      userName: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      isSignedIn: false,
+      token: "",
+      portrait: "qi6o2g0haw3vfcjetmmn"
+    });
+  }
+
   return (
     <Router>
       <Grommet theme={globalGrommetTheme}>
@@ -213,6 +228,13 @@ function App() {
         </Route>
       </Switch>
       </Grommet>
+      { userState.userName === 'Guest' && 
+        <Box pad='small' style={{ position: 'fixed', bottom: '10px', right: '0px' }} >
+          <Text color='rgba(0,0,0,0.4)'>
+            You are signed in as a guest. <Anchor href='/splash/signup' onClick={handleGuestGoToSignUp}>Click here</Anchor> to create an account for yourself.
+          </Text>
+        </Box> }
+      
     </Router>
   );
 }
