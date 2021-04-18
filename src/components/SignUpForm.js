@@ -71,6 +71,28 @@ export default function SignUpForm(props) {
         }
     }
 
+    const handleGuestSignIn = () => {
+        API.signIn({
+            userName: 'Guest',
+            password: 'guestP@ssw0rd'
+        }).then((response) => {
+            props.setUserState({
+                id: response.data.user.id,
+                userName: response.data.user.userName,
+                firstName: response.data.user.firstName,
+                lastName: response.data.user.lastName,
+                email: response.data.user.email,
+                portrait: response.data.user.portrait,
+                bio: response.data.user.bio,
+                isSignedIn: true,
+                token: response.data.token
+            })
+        }).catch((err) => {
+            localStorage.clear('token');
+            setErrorState({ password: err.responseText });
+        });
+    }
+
     return (
         <Grommet theme={customTheme}>
         <Form onSubmit={handleSubmit} value={signUpFormState}>
@@ -154,9 +176,24 @@ export default function SignUpForm(props) {
                     <Text color="status-error">{errorState.response.statusText}</Text>
                 </Box>)
             }
-            <Box align='center'>
-                <Button primary size='large' type='submit' label='Sign Up' />
-            </Box>
+                <Box align='center'>
+                    <Box align='center'>
+                        <Button primary size='large' type='submit' label='Sign Up' />
+                    </Box>
+
+                    <Box
+                        margin={{ top: 'medium' }}
+                        round='small'
+                        pad='small'
+                        background='rgba(212,212,212,1)'
+                        align='center'
+                        width='80%'
+                    >
+                        <Text>
+                            Are you here to demo this application? <Anchor onClick={handleGuestSignIn}>Click here</Anchor> to sign in with a guest account.
+                        </Text>
+                    </Box>
+                </Box>
         </Form>
         </Grommet>
     )
