@@ -230,6 +230,7 @@ function App() {
       </Grommet>
       { userState.userName === 'Guest' && 
         <Box 
+          width={{ max: '400px', min: 'auto' }}
           margin={{ right: 'small' }}
           background='rgba(0,0,0,0.1)' 
           pad='small' 
@@ -237,7 +238,7 @@ function App() {
           style={{ position: 'fixed', bottom: '10px', right: '0px' }} 
         >
           <Text color='rgba(0,0,0,0.4)'>
-            You are signed in as a guest. <Anchor href='/splash/signup' onClick={handleGuestGoToSignUp}>Click here</Anchor> to create an account for yourself.
+            You are signed in as a guest. <Anchor pointerEvents='auto' href='/splash/signup' onClick={handleGuestGoToSignUp}>Click here</Anchor> to create an account for yourself.
           </Text>
         </Box> }
       
