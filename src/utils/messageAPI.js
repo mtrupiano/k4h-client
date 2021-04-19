@@ -1,6 +1,11 @@
 import axios from "axios";
 
-const url = "https://mst-k4h-server.herokuapp.com";
+let url = '';
+if (process.env.NODE_ENV === 'production') {
+    url = "https://mst-k4h-server.herokuapp.com"
+} else if (process.env.NODE_ENV === 'development') {
+    url = "http://localhost:3001"
+}
 
 export default {
     createThread: (otherUser, token) => {

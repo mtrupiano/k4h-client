@@ -28,26 +28,29 @@ export default function ThreadView(props) {
     const [ typingState,  setTypingState ]  = useState(false);
 
     useEffect( async () => {
-        const messages 
-            = (await messageAPI.getThreadMessages(props.selectedThread, props.userState.token)).data;
-        setMessagesList(messages);
-
-        socket.on('connect', data => {
-            socket.emit('join', props.selectedThread);
-        });
-
-        socket.on('newMessage', async data => {
-            setMessagesList(
-                (await messageAPI.getThreadMessages(props.selectedThread, props.userState.token)).data
-            );
-        });
-
-        let prevTimer;
-        socket.on( `typing-${props.selectedThread}-${props.toUser.id}`, () => {
-            setTypingState(true);
-            clearTimeout(prevTimer);
-            prevTimer = setTimeout(() => setTypingState(false), 3000);
-        });
+        
+        if (props.selectedThread !== -1) {
+            const messages 
+                = (await messageAPI.getThreadMessages(props.selectedThread, props.userState.token)).data;
+            setMessagesList(messages);
+    
+            socket.on('connect', data => {
+                socket.emit('join', props.selectedThread);
+            });
+    
+            socket.on('newMessage', async data => {
+                setMessagesList(
+                    (await messageAPI.getThreadMessages(props.selectedThread, props.userState.token)).data
+                );
+            });
+    
+            let prevTimer;
+            socket.on( `typing-${props.selectedThread}-${props.toUser.id}`, () => {
+                setTypingState(true);
+                clearTimeout(prevTimer);
+                prevTimer = setTimeout(() => setTypingState(false), 3000);
+            });
+        }
 
         return function cleanup() {
             socket.emit('disconnect');
