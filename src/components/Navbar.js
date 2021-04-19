@@ -57,7 +57,7 @@ export default function Navbar(props) {
                     margin={{vertical: '0px', left: '6px'}} 
                     level={3}
                 >
-                        Knowledge4Hire
+                    Knowledge4Hire
                 </Heading>
             </Box>
 
@@ -65,32 +65,25 @@ export default function Navbar(props) {
                 <Box align='center' gap='medium' direction='row'>
                     <Box direction='row' gap='medium'>
                         
-                        <Anchor>
-                            <Link
+                            <Anchor
                                 to='/ask' 
                                 style={{ color: '#fce181', textDecoration: 'inherit' }}
                             >
                                 Ask
-                            </Link>
-                        </Anchor>
-
-                        <Anchor>
-                            <Link
+                            </Anchor>
+                            <Anchor
                                 to='/home' 
                                 style={{ color: '#fce181', textDecoration: 'inherit' }}
                             >
                                 Home
-                            </Link>
-                        </Anchor>
+                            </Anchor>
 
                         { props.userState.isSignedIn && 
-                            <Anchor color="#FCE181">
-                                <Link 
-                                    to='/messages' 
-                                    style={{ color: "#FCE181", textDecoration: 'inherit' }}
-                                >
-                                    <Chat color="#FCE181" />
-                                </Link>
+                            <Anchor 
+                                to='/messages' 
+                                style={{ color: "#FCE181", textDecoration: 'inherit' }}
+                            >
+                                <Chat color="#FCE181" />
                             </Anchor>
                         }
 
