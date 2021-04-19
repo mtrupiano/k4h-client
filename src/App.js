@@ -229,7 +229,13 @@ function App() {
       </Switch>
       </Grommet>
       { userState.userName === 'Guest' && 
-        <Box pad='small' style={{ position: 'fixed', bottom: '10px', right: '0px' }} >
+        <Box 
+          margin={{ right: 'small' }}
+          background='rgba(0,0,0,0.1)' 
+          pad='small' 
+          round='small'
+          style={{ position: 'fixed', bottom: '10px', right: '0px' }} 
+        >
           <Text color='rgba(0,0,0,0.4)'>
             You are signed in as a guest. <Anchor href='/splash/signup' onClick={handleGuestGoToSignUp}>Click here</Anchor> to create an account for yourself.
           </Text>
