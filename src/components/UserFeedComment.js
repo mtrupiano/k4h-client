@@ -25,7 +25,7 @@ export default function UserFeedComment(props) {
 
         setDateString(dateStr);
 
-        let commentTarget;
+        let commentTarget
 
         if (props.comment.AnswerId) {
             commentTarget = (await API.getAnswerById(props.comment.AnswerId)).data;
@@ -52,9 +52,19 @@ export default function UserFeedComment(props) {
 
     return (
         <Card>
-            <Box align='center' justify='between' pad='small' fill direction='row'>
+            <Box 
+                fill
+                align='center' 
+                justify='between' 
+                pad='small' 
+                direction='row'
+            >
                 <Box gap='small' direction='row'>
-                    <Box width='40px' align='center' justify='center'>
+                    <Box 
+                        width='40px' 
+                        align='center' 
+                        justify='center'
+                    >
                         <Chat />
                     </Box>
                     <Box>
