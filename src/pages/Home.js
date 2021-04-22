@@ -262,7 +262,7 @@ export default function Home(props) {
                     }}
                     >
                     { relatedUsers.map( e => {
-                        return  <Box justify='around' direction='row'>
+                        return  <Box key={e.id} justify='around' direction='row'>
                                     <UserWidget userState={e} width='40%' />
                                     <Box justify='center'>
                                         <Text size='12pt'>
