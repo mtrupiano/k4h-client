@@ -43,27 +43,28 @@ export default function Profile(props) {
     }
 
     useEffect(() => {
-
-        API.getQuestionByUser(props.userState.id).then(response => {
-            console.log(`getQuestions: `, response);
-            setQuestions(response.data);
-        }).catch(err => {
-            console.log(err);
-        });
-
-        API.getServicesByUser(props.userState.id).then(response => {
-            setServices(response.data);
-            console.log(`services: `, response.data);
-        });
-
-        API.getTagsByUser(props.userState.id).then(response => {
-            setTags(response.data);
-            console.log(`tags: `, response.data);
-        });
-        API.getAnswersByUser(props.userState.id).then(response => {
-            setAnswers(response.data);
-            console.log(`answers: `, response.data);
-        })
+        if (props.userState) {
+            API.getQuestionByUser(props.userState.id).then(response => {
+                console.log(`getQuestions: `, response);
+                setQuestions(response.data);
+            }).catch(err => {
+                console.log(err);
+            });
+    
+            API.getServicesByUser(props.userState.id).then(response => {
+                setServices(response.data);
+                console.log(`services: `, response.data);
+            });
+    
+            API.getTagsByUser(props.userState.id).then(response => {
+                setTags(response.data);
+                console.log(`tags: `, response.data);
+            });
+            API.getAnswersByUser(props.userState.id).then(response => {
+                setAnswers(response.data);
+                console.log(`answers: `, response.data);
+            })
+        }
 
     }, []);
 

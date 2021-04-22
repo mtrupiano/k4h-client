@@ -34,7 +34,7 @@ export default function TagInput(props) {
     const onEnter = (event) => {
         if (event.code === 'Enter') {
             event.preventDefault();
-            props.onAddTag(currentTag);
+            props.handleTagAdd(currentTag);
             setCurrentTag('');
             setSuggestions([]);
         }
@@ -48,7 +48,7 @@ export default function TagInput(props) {
     }
 
     const handleSuggestionSelect = (event) => {
-        props.onAddTag(event.suggestion);
+        props.handleTagAdd(event.suggestion);
         setCurrentTag('');
         setSuggestions([]);
     }

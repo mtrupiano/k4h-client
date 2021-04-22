@@ -125,7 +125,7 @@ export default function AddServiceForm(props) {
                     <TagInput placeholder='Add tags...'
                         userState={props.userState}
                         selectedTags={tagNames} setSelectedTags={setTagNames}
-                        onAddTag={onAddTag} />
+                        handleTagAdd={onAddTag} />
                 </FormField>
                 
                 <Box align='center'>

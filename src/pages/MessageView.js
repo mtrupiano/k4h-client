@@ -67,16 +67,18 @@ export default function MessageView(props) {
     }
 
     useEffect( async () => {
-        setNewThreadState({username: ''});
-        const loadThreadsList = (await messageAPI.getThreads(props.userState.token)).data;
-        setThreadsList(loadThreadsList);
-
-        if (threadId) {
-            const thread = loadThreadsList.find(e => e.id === parseInt(threadId))
-            setSelectedThread({
-                id: parseInt(threadId),
-                toUser: (thread.user1 || thread.user2)
-            });
+        setNewThreadState({ username: '' });
+        if (props.userState.token) {
+            const loadThreadsList = (await messageAPI.getThreads(props.userState.token)).data;
+            setThreadsList(loadThreadsList);
+    
+            if (threadId) {
+                const thread = loadThreadsList.find(e => e.id === parseInt(threadId))
+                setSelectedThread({
+                    id: parseInt(threadId),
+                    toUser: (thread.user1 || thread.user2)
+                });
+            }
         }
     }, []);
 
@@ -126,7 +128,6 @@ export default function MessageView(props) {
                         <TextInput
                             placeholder='New conversation' 
                             onChange={handleNewThreadChange}
-                            value={{ username: newThreadState.username }}
                             pad={{'horizontal': 'xsmall'}}
                             suggestions={usersList.map(e => ({ label: `${e.firstName} ${e.lastName} (${e.userName})`, value: e.userName}))}
                             onSuggestionSelect={handleNewThread}
@@ -138,14 +139,16 @@ export default function MessageView(props) {
                         <Button margin='small' type='submit' icon={<Add />} />
                     </Box>
                 </Form>
+
                 <Box background='#FCE181' height='3px' margin={{bottom: 'small'}}></Box>
-                { threadsList.map( (e) => {
+
+                { threadsList.map( thread => {
                     return <ThreadListItem
                                 userState={props.userState}
-                                toUser={e.user1 ? e.user1 : e.user2} 
-                                key={e.id} 
-                                threadId={e.id}
-                                active={selectedThread.id === e.id}
+                                toUser={thread.user1 ? thread.user1 : thread.user2}
+                                key={thread.id}
+                                threadId={thread.id}
+                                active={selectedThread.id === thread.id}
                                 onClick={handleThreadSelect}
                             />
                 }) }

@@ -154,7 +154,7 @@ export default function Ask(props) {
                                 placeholder='Add tags...'
                                 selectedTags={tagNames} 
                                 setSelectedTags={setTagNames} 
-                                onAddTag={onAddTag} />
+                                handleTagAdd={onAddTag} />
                         </FormField>
 
                         <Box align='center'>
