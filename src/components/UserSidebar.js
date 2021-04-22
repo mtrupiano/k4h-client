@@ -177,8 +177,8 @@ export default function UserSidebar(props) {
                         setSelectedTags={setFollowedTags}
                         userState={props.userState}
                         lineBreak={true}
-                        onAddTag={followTag}
-                        onRemoveTag={unfollowTag} />
+                        handleTagAdd={followTag}
+                        handleTagRemove={unfollowTag} />
                     :
                     ( followedTags.length > 0 ? 
                         <TagDisplay userState={props.userState} tags={followedTags} />
