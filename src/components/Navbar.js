@@ -66,23 +66,20 @@ export default function Navbar(props) {
                     <Box direction='row' gap='medium'>
                         
                             <Anchor
-                                to='/ask' 
-                                style={{ color: '#fce181', textDecoration: 'inherit' }}
+                                href='/ask' 
+                                style={{ color: '#fce181' }}
                             >
                                 Ask
                             </Anchor>
                             <Anchor
-                                to='/home' 
-                                style={{ color: '#fce181', textDecoration: 'inherit' }}
+                                href='/home' 
+                                style={{ color: '#fce181' }}
                             >
                                 Home
                             </Anchor>
 
                         { props.userState.isSignedIn && 
-                            <Anchor 
-                                to='/messages' 
-                                style={{ color: "#FCE181", textDecoration: 'inherit' }}
-                            >
+                            <Anchor href='/messages'>
                                 <Chat color="#FCE181" />
                             </Anchor>
                         }
