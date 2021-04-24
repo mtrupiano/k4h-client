@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import { Form, Button, Box, Heading, Anchor, Text, Stack } from 'grommet';
 
 import io from 'socket.io-client';
@@ -8,15 +9,19 @@ import {
     EditorState,
     ContentState
 } from 'draft-js';
+import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
 
 import MessageBubble from './MessageBubble';
-
-import messageAPI from '../utils/messageAPI';
-import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
-import { useHistory } from 'react-router';
 import NothingHereDisplay from './NothingHereDisplay';
 
-const ENDPOINT = 'https://mst-k4h-server.herokuapp.com/';
+import messageAPI from '../utils/messageAPI';
+
+let ENDPOINT = '';
+if (process.env.NODE_ENV === 'production') {
+    ENDPOINT = "https://mst-k4h-server.herokuapp.com"
+} else if (process.env.NODE_ENV === 'development') {
+    ENDPOINT = "http://localhost:3001"
+}
 let socket = io(ENDPOINT);
 
 export default function ThreadView(props) {
@@ -95,7 +100,7 @@ export default function ThreadView(props) {
             background={{color: '#939393', opacity:'weak'}} 
             width='100%'
         >
-                { props.selectedThread !== -1 ? 
+            { props.selectedThread !== -1 ?     
                 <>
 
                 <Box 
@@ -142,7 +147,7 @@ export default function ThreadView(props) {
 
                 <Box margin={{vertical: '10px'}}>
                     <Form 
-                        value={editorState.getCurrentContent().getPlainText()}
+                        value={{ content: editorState.getCurrentContent().getPlainText() }}
                         onSubmit={handleSend}
                     >
                         <Box 
@@ -162,7 +167,8 @@ export default function ThreadView(props) {
                                         placeholder='Write your message here...'
                                         onChange={ (newState) => setEditorState(newState) } 
                                         editorState={editorState}
-                                        handleReturn={handleReturn} />
+                                        handleReturn={handleReturn} 
+                                    />
                                     { typingState && 
                                         <Box margin={{ top: '-25px' }}>
                                             <Text size='12pt'>
