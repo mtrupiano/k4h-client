@@ -73,14 +73,14 @@ export default function MessageView(props) {
             setThreadsList(loadThreadsList);
     
             if (threadId) {
-                const thread = loadThreadsList.find(e => e.id === parseInt(threadId))
+                const thread = loadThreadsList.find( thread => thread.id === parseInt(threadId) )
                 setSelectedThread({
                     id: parseInt(threadId),
                     toUser: (thread.user1 || thread.user2)
                 });
             }
         }
-    }, []);
+    }, [props.userState.token]);
 
 
     // Override Grommet theming
