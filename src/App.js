@@ -154,10 +154,7 @@ function App() {
   return (
     <Router>
       <Grommet theme={globalGrommetTheme}>
-
-
       <Switch>
-
         <Route exact path="/">
           <Home userState={ userState.isSignedIn ? userState : {} } />
         </Route>
@@ -188,9 +185,9 @@ function App() {
         <Route exact path="/users/:id">
           <User />
         </Route>
-        <ProtectedRoute exact path="/ask" isSignedIn={userState.isSignedIn}>
-          <Ask pad={{ horizontal: '10%' }} showBackButton showNav userState={userState}/>
-        </ProtectedRoute>
+        <Route exact path="/ask">
+          <Ask pad={{ horizontal: '10%' }} showBackButton showNav userState={userState}/> 
+        </Route>
         <Route path="/service/:id">
           <Service userState={userState}/>
         </Route>
@@ -219,10 +216,6 @@ function App() {
         <Route exact path='/messages'>
           <MessageView userState={userState} />
         </Route> 
-
-        {/* <ProtectedRoute exact path="/messages/:threadId" isSignedIn={userState.isSignedIn}>
-          <MessageView userState={userState} />
-        </ProtectedRoute> */}
         <Route path="*">
           <NotFound />
         </Route>
