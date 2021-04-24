@@ -128,8 +128,13 @@ export default function MessageView(props) {
                         <TextInput
                             placeholder='New conversation' 
                             onChange={handleNewThreadChange}
-                            pad={{'horizontal': 'xsmall'}}
-                            suggestions={usersList.map(e => ({ label: `${e.firstName} ${e.lastName} (${e.userName})`, value: e.userName}))}
+                            pad={{ horizontal: 'xsmall' }}
+                            suggestions={ usersList.map(user => {
+                                return { 
+                                    label: `${user.firstName} ${user.lastName} (${user.userName})`,
+                                    value: user.userName
+                                }
+                            }) }
                             onSuggestionSelect={handleNewThread}
                             dropProps={{
                                 stretch: false,
